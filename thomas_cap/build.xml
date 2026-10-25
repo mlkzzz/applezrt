@@ -1,0 +1,14 @@
+<project name="openemv_v4" default="cap" basedir=".">
+  <!-- ant-javacard : https://github.com/martinpaljak/ant-javacard -->
+  <taskdef name="javacard" classname="pro.javacard.ant.JavaCard" classpath="ant-javacard.jar"/>
+  <target name="cap">
+    <!-- Mettre ici le chemin du JavaCard SDK 2.2.2 (celui du .cap d'origine : converter 1.3) -->
+    <javacard jckit="/chemin/vers/java_card_kit-2_2_2">
+      <!-- AID du package et AID de l'applet : IDENTIQUES a thomas.cap -->
+      <cap output="thomas_v4.cap" sources="src" package="openemv"
+           aid="54484F4D41532053414E4348455A" version="1.0">
+        <applet class="openemv.SimpleEMVApplet" aid="54484F4D4153"/>
+      </cap>
+    </javacard>
+  </target>
+</project>
