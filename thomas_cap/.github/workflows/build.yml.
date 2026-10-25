@@ -1,0 +1,25 @@
+name: Build CAP
+on:
+  workflow_dispatch:
+  push:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '8'
+      - name: Fetch Java Card SDK and ant-javacard
+        run: |
+          git clone --depth 1 https://github.com/martinpaljak/oracle_javacard_sdks sdks
+          curl -L -o ant-javacard.jar https://github.com/martinpaljak/ant-javacard/releases/latest/download/ant-javacard.jar
+          sed -i 's#jckit="[^"]*"#jckit="sdks/jc222_kit"#' build.xml
+      - name: Build CAP
+        run: ant cap
+      - uses: actions/upload-artifact@v4
+        with:
+          name: thomas_v4_cap
+          path: thomas_v4.cap
+ 
